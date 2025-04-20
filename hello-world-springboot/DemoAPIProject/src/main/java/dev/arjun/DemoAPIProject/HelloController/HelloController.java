@@ -16,6 +16,7 @@ public class HelloController {
     public String greet(@PathVariable String name) {
         return "Hello, " + name + "!";
     }
+
     @GetMapping("/user")
     public user getUser() {
         return new user("Arjun", 1, "India");
