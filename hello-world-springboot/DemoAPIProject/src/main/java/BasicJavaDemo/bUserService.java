@@ -1,15 +1,15 @@
 package BasicJavaDemo;
 
 public class bUserService {
+    private final cUserRepository cUserRepositoryObj;
 
-    private bUserService bUserService;
-
-    public bUserService() {
-        this.repository = new cUserRepository();
+    //Constructor
+    public bUserService(cUserRepository cUserRepositoryObj) {
+        this.cUserRepositoryObj = cUserRepositoryObj;
     }
 
     public String getUserGreetingMsg() {
-        String username = "";
-        return "Hello! Welcome to our app" + username;
+        String username = cUserRepositoryObj.getUserName();;
+        return "Hello! Welcome to our app " + username;
     }
 }
