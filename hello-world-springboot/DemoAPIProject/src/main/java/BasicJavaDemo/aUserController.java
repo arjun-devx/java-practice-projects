@@ -2,10 +2,13 @@ package BasicJavaDemo;
 
 public class aUserController {
 
-    private bUserServiceobj bUserService();
+    private bUserService bUserServiceObj;
 
-    public String greetUser() {
-        return bUserService().getUserGreetingMsg();
+    public aUserController(bUserService bUserServiceObj) {
+        this.bUserServiceObj =  bUserServiceObj;
+    }
 
+    public void greetUser() {
+        System.out.println(bUserServiceObj.getUserGreetingMsg());
     }
 }

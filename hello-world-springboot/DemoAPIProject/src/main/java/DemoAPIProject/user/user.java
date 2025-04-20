@@ -1,4 +1,4 @@
-package dev.arjun.DemoAPIProject.user;
+package DemoAPIProject.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
