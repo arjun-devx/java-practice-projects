@@ -6,10 +6,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
+
     @Autowired
     private FakeStoreClient fakeStoreClient;
 
     public FakeStoreProductDTO[] getAllProductsFromFakeStore() {
+
         return fakeStoreClient.getAllProducts();
+    }
+
+    public FakeStoreProductDTO getProductFromFakeStore(int Id) {
+
+        return fakeStoreClient.getProduct(Id);
     }
 }
