@@ -25,7 +25,7 @@ public class ProductService {
         return fakeStoreClient.addProduct(fakeStoreProductDTO);
     }
 
-    public void updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
-        fakeStoreClient.updateProduct(id, fakeStoreProductDTO);
+    public FakeStoreProductDTO updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
+        return fakeStoreClient.updateProduct(id, fakeStoreProductDTO);
     }
 }

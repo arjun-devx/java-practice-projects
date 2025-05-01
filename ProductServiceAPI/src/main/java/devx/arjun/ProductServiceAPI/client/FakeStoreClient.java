@@ -4,7 +4,12 @@ import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Getter
@@ -33,8 +38,16 @@ public class FakeStoreClient {
         return response;
     }
 
-    public void updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
+    public FakeStoreProductDTO updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
         String url = "https://fakestoreapi.com/products/" + id;
-        restTemplate.put(url, fakeStoreProductDTO);
+        return putForObject(url, fakeStoreProductDTO, FakeStoreProductDTO.class);
+    }
+
+
+    @Nullable
+    private <T> T putForObject(String url, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
+        HttpMessageConverterExtractor<T> responseExtractor = new HttpMessageConverterExtractor(responseType, restTemplate.getMessageConverters());
+        return restTemplate.execute(url, HttpMethod.PUT, requestCallback, responseExtractor, (Object[])uriVariables);
     }
 }
