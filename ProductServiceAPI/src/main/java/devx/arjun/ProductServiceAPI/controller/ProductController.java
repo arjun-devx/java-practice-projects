@@ -3,9 +3,7 @@ package devx.arjun.ProductServiceAPI.controller;
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import devx.arjun.ProductServiceAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -22,5 +20,11 @@ public class ProductController {
     public FakeStoreProductDTO getProduct(@PathVariable int Id) {
 
         return productService.getProductFromFakeStore(Id);
+    }
+
+    @PostMapping ("/product")
+    public FakeStoreProductDTO addProduct(@RequestBody FakeStoreProductDTO fakeStoreProductDTO) {
+
+        return productService.addProduct(fakeStoreProductDTO);
     }
 }

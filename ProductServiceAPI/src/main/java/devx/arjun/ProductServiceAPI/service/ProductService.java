@@ -19,4 +19,9 @@ public class ProductService {
 
         return fakeStoreClient.getProduct(Id);
     }
+
+    public FakeStoreProductDTO addProduct(FakeStoreProductDTO fakeStoreProductDTO) {
+
+        return fakeStoreClient.addProduct(fakeStoreProductDTO);
+    }
 }

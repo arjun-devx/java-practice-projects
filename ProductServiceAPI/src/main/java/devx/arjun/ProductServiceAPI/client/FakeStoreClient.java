@@ -26,4 +26,10 @@ public class FakeStoreClient {
         FakeStoreProductDTO response = restTemplate.getForObject(getProduct, FakeStoreProductDTO.class);
         return response;
     }
+
+    public FakeStoreProductDTO addProduct(FakeStoreProductDTO fakeStoreProductDTO) {
+        String url = "https://fakestoreapi.com/products/";
+        FakeStoreProductDTO response = restTemplate.postForObject(url, fakeStoreProductDTO, FakeStoreProductDTO.class);
+        return response;
+    }
 }
