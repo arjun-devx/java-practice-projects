@@ -32,4 +32,9 @@ public class FakeStoreClient {
         FakeStoreProductDTO response = restTemplate.postForObject(url, fakeStoreProductDTO, FakeStoreProductDTO.class);
         return response;
     }
+
+    public void updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
+        String url = "https://fakestoreapi.com/products/" + id;
+        restTemplate.put(url, fakeStoreProductDTO);
+    }
 }
