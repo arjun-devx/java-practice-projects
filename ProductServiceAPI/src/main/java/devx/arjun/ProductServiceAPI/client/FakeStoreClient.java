@@ -34,13 +34,13 @@ public class FakeStoreClient {
 
     public FakeStoreProductDTO addProduct(FakeStoreProductDTO fakeStoreProductDTO) {
         String url = "https://fakestoreapi.com/products/";
-        FakeStoreProductDTO response = restTemplate.postForObject(url, fakeStoreProductDTO, FakeStoreProductDTO.class);
+        FakeStoreProductDTO response = genericRequestForObject(url, HttpMethod.POST, fakeStoreProductDTO, FakeStoreProductDTO.class);
         return response;
     }
 
     public FakeStoreProductDTO updateProduct(int id, FakeStoreProductDTO fakeStoreProductDTO) {
         String url = "https://fakestoreapi.com/products/" + id;
-        return putForObject(url, fakeStoreProductDTO, FakeStoreProductDTO.class);
+        return genericRequestForObject(url, HttpMethod.PUT, fakeStoreProductDTO, FakeStoreProductDTO.class);
     }
 
 
@@ -50,4 +50,12 @@ public class FakeStoreClient {
         HttpMessageConverterExtractor<T> responseExtractor = new HttpMessageConverterExtractor(responseType, restTemplate.getMessageConverters());
         return restTemplate.execute(url, HttpMethod.PUT, requestCallback, responseExtractor, (Object[])uriVariables);
     }
+
+    @Nullable
+    private <T> T genericRequestForObject(String url, HttpMethod httpMethod, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
+        HttpMessageConverterExtractor<T> responseExtractor = new HttpMessageConverterExtractor(responseType, restTemplate.getMessageConverters());
+        return restTemplate.execute(url, httpMethod, requestCallback, responseExtractor, (Object[])uriVariables);
+    }
+    //added generic method with the all the http method support by adding the HttpMethod argument.
 }
