@@ -43,6 +43,16 @@ public class FakeStoreClient {
         return genericRequestForObject(url, HttpMethod.PUT, fakeStoreProductDTO, FakeStoreProductDTO.class);
     }
 
+    public Boolean deleteProduct(int productId) {
+        String url = "https://fakestoreapi.com/products/" + productId;
+        try {
+            genericRequestForObject(url, HttpMethod.DELETE, null, FakeStoreProductDTO.class);
+            return true;
+        } catch (Exception ex){
+            return false;
+        }
+    }
+
 
     @Nullable
     private <T> T putForObject(String url, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
