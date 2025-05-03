@@ -49,7 +49,7 @@ public class ProductController {
         return productService.deleteProduct(productId);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler ({IllegalArgumentException.class, NullPointerException.class})
     public ResponseEntity<String> handleException(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
