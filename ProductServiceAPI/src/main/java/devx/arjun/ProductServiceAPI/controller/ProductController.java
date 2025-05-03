@@ -26,8 +26,8 @@ public class ProductController {
     @GetMapping ("/product/{Id}")
     public ResponseEntity<FakeStoreProductDTO> getProduct(@PathVariable("Id") int Id) {
         if (Id <= 0) {
-            //throw new IllegalArgumentException("Product does not exists, provide valid productId");
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Product does not exists, provide valid productId");
+            //return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         FakeStoreProductDTO fakeStoreProductDTO = productService.getProductFromFakeStore(Id);
         return new ResponseEntity<>(fakeStoreProductDTO, HttpStatus.OK);
@@ -47,5 +47,10 @@ public class ProductController {
     @DeleteMapping ("/product/{productId}")
     public Boolean deleteProduct (@PathVariable int productId) {
         return productService.deleteProduct(productId);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleException(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
