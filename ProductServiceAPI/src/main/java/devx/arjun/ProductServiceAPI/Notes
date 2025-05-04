@@ -20,3 +20,20 @@ FakeStoreClient -> Contains the code to communicate with FakeStore
 Spring ->
 RestTemplate -> going to be deprecated || use RestTemplate - library
 WebClient -> latest
+
+
+------------------
+Cardinality among the models
+
+Product
+
+Category
+
+
+
+Product
+        Category category;
+
+Category
+
+        List<Product> product;

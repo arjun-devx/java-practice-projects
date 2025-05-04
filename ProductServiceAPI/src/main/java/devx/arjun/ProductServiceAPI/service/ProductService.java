@@ -7,6 +7,7 @@ import devx.arjun.ProductServiceAPI.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class ProductService {
     public List<Product> getAllProductRepo() {
         return productRepository.findAll();
     }
+
     public Product getProductRepo(int productId) {
         Optional<Product> productOptional = productRepository.findById(productId);
         if (productOptional.isEmpty()) {
@@ -30,16 +32,36 @@ public class ProductService {
             return productOptional.get();
         }
     }
+
     public Product saveProductRepo(Product newProduct) {
         Product savedProduct = productRepository.save(newProduct);
         return savedProduct;
     }
+
+    public List<Product> getProductByDescription(String description) {
+      /*  List<Product> products = productRepository.findAll();
+        List<Product> matchedProducts = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getDescription().equals(description)) {
+                matchedProducts.add(product);
+            }
+        }
+        return matchedProducts;
+
+       */ //Ideally above piece of code is needed to contact the repository and compare description of the lis of the products received from the productRepository
+        //However instead of this, we can also implement custom method in ProductRepository where we can directly make the search based on the incoming input.
+
+        List<Product> matchedProducts  = productRepository.findAllByDescription(description);
+        return matchedProducts;
+    }
+
     public Product updateProductRepo (Product newProduct, int productId) {
         Product findProduct = getProductRepo(productId);
         //newProduct.setId(productId);
         Product updatedProduct = productRepository.save(newProduct);
         return updatedProduct;
     }
+
     public Boolean deleteProductRepo(int productId) {
         productRepository.deleteById(productId);
         return true;

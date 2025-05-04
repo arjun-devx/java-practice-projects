@@ -36,8 +36,14 @@ public class ProductController {
 
     @PostMapping ("/product")
     public ResponseEntity<Product> createProductRepo(@RequestBody Product product) {
-        Product createProduct = productService.saveProductRepo(product);
-        return ResponseEntity.ok(createProduct);
+        Product createdProduct = productService.saveProductRepo(product);
+        return ResponseEntity.ok(createdProduct);
+    }
+
+    @GetMapping ("/product/desc/{description}")
+    public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
+        List<Product> matchedProducts = productService.getProductByDescription(description);
+        return ResponseEntity.ok(matchedProducts);
     }
 
     @PutMapping ("/product/{productId}")

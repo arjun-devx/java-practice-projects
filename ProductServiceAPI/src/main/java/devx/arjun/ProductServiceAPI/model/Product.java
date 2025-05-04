@@ -1,10 +1,7 @@
 package devx.arjun.ProductServiceAPI.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,30 +12,47 @@ import java.time.LocalDateTime;
 @Entity
 public class Product extends BaseModel {
     private String name;
-    private String category;
-    private double price;
+   // private Category category;
     private String description;
+
+    private double price;
     private double rating;
     private int quantity;
+
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(int quantity) {
