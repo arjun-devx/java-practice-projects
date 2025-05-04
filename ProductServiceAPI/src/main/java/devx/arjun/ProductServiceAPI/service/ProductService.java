@@ -51,7 +51,7 @@ public class ProductService {
        */ //Ideally above piece of code is needed to contact the repository and compare description of the lis of the products received from the productRepository
         //However instead of this, we can also implement custom method in ProductRepository where we can directly make the search based on the incoming input.
 
-        List<Product> matchedProducts  = productRepository.findAllByDescription(description);
+        List<Product> matchedProducts  = productRepository.findAllByDescriptionIgnoreCase(description);
         return matchedProducts;
     }
 
