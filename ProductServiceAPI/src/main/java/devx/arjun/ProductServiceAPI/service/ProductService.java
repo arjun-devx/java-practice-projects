@@ -36,7 +36,7 @@ public class ProductService {
     }
     public Product updateProductRepo (Product newProduct, int productId) {
         Product findProduct = getProductRepo(productId);
-        newProduct.setId(productId);
+        //newProduct.setId(productId);
         Product updatedProduct = productRepository.save(newProduct);
         return updatedProduct;
     }
