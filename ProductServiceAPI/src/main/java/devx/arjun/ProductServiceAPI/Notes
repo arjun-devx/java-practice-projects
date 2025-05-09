@@ -37,3 +37,12 @@ Product
 Category
 
         List<Product> product;
+
+
+Maintain version in the API URL --> /something/v1/something/
+Whenever we change the API Contract -> we should also change the URL
+We change the versions in the url v1 -> v2
+new url -> /something/v2/something
+
+API contract -> How to use the API, the inputs required and the output structure
+

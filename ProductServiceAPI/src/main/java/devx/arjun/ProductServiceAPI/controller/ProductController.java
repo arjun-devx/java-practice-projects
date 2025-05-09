@@ -16,6 +16,7 @@ import org.springframework.web.client.RestClientException;
 import java.util.List;
 
 @RestController
+@RequestMapping ("/v1") //every API on this controller would be /v1/API
 public class ProductController {
     @Autowired
     private ProductService productService;
