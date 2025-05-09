@@ -11,28 +11,19 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 public class Product extends BaseModel {
-    private String name;
-   // private Category category;
-    private String description;
 
+    @ManyToOne
+    private Category category;
     private double price;
     private double rating;
     private int quantity;
 
-    public String getName() {
-        return name;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public double getPrice() {

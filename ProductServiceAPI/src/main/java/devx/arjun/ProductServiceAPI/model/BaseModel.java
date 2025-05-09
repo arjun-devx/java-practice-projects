@@ -12,6 +12,8 @@ public class BaseModel {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int id;
+    private String name;
+    private Category category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
