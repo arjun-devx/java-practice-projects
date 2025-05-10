@@ -63,4 +63,6 @@ controller -> service -> ProductProjection[3]
 controller can again use a DTO -> return even smaller subset.
 ProductInfoDTO[]2
 
----
+-------------------
+
+
