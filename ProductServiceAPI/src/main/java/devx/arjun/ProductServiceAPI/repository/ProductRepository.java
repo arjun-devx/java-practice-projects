@@ -1,5 +1,6 @@
 package devx.arjun.ProductServiceAPI.repository;
 
+import devx.arjun.ProductServiceAPI.dto.ProductProjection;
 import devx.arjun.ProductServiceAPI.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,8 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByDescription(String description);
     List<Product> findAllByDescriptionIgnoreCase(String description);
-
+    Product findFirstByDescriptionIgnoreCase(String description);
+    ProductProjection findFirstByName(String name);
 }
 
 /*

@@ -1,6 +1,7 @@
 package devx.arjun.ProductServiceAPI.controller;
 
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
+import devx.arjun.ProductServiceAPI.dto.ProductProjection;
 import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,12 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
         List<Product> matchedProducts = productService.getProductByDescription(description);
         return ResponseEntity.ok(matchedProducts);
+    }
+
+    @GetMapping ("/product/projection/{name}")
+    public ResponseEntity<ProductProjection> getProductProjectionByDescription(@PathVariable ("name") String name) {
+        ProductProjection matchedProductProjection = productService.getProductProjection(name);
+        return ResponseEntity.ok(matchedProductProjection);
     }
 
     @PutMapping ("/product/{productId}")

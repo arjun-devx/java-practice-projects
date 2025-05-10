@@ -1,6 +1,7 @@
 package devx.arjun.ProductServiceAPI.service;
 import devx.arjun.ProductServiceAPI.client.FakeStoreClient;
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
+import devx.arjun.ProductServiceAPI.dto.ProductProjection;
 import devx.arjun.ProductServiceAPI.exception.ProductNotFoundException;
 import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.repository.ProductRepository;
@@ -57,9 +58,13 @@ public class ProductService {
 
     public Product updateProductRepo (Product newProduct, int productId) {
         Product findProduct = getProductRepo(productId);
-        //newProduct.setId(productId);
+        newProduct.setId(productId);
         Product updatedProduct = productRepository.save(newProduct);
         return updatedProduct;
+    }
+
+    public ProductProjection getProductProjection (String productName) {
+        return productRepository.findFirstByName(productName);
     }
 
     public Boolean deleteProductRepo(int productId) {
