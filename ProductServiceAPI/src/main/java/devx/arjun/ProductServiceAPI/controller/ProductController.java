@@ -2,6 +2,7 @@ package devx.arjun.ProductServiceAPI.controller;
 
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import devx.arjun.ProductServiceAPI.dto.ProductProjection;
+import devx.arjun.ProductServiceAPI.dto.ProductResponseDTO;
 import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestClientException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +25,31 @@ public class ProductController {
     private ProductService productService;
 
     //below section is for the controller --> services --> repository --> DataBase (products model) - mariaDB
+
+    @GetMapping ("/product/category/{categoryId}")
+    public ResponseEntity<List<ProductResponseDTO>> getAllProductsByCategory(@PathVariable ("categoryId") int categoryId) {
+
+        List<Product> savedProducts = productService.getAllProductByCategoryId(categoryId);
+
+        List<ProductResponseDTO> responseListDTO = new ArrayList<>();
+        for (Product product : savedProducts) {
+            ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+                productResponseDTO.setProductName(product.getName());
+                productResponseDTO.setProductDescription(product.getDescription());
+                productResponseDTO.setProductPrice(product.getPrice());
+                productResponseDTO.setRating(product.getRating());
+            responseListDTO.add(productResponseDTO);
+        }
+        return ResponseEntity.ok(responseListDTO);
+    }
+
+
+    @GetMapping ("/product/desc/{description}")
+    public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
+        List<Product> matchedProducts = productService.getProductByDescription(description);
+        return ResponseEntity.ok(matchedProducts);
+    }
+
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<Product> getProductByIdRepo (@PathVariable int productId) {
@@ -40,12 +67,6 @@ public class ProductController {
     public ResponseEntity<Product> createProductRepo(@RequestBody Product product) {
         Product createdProduct = productService.saveProductRepo(product);
         return ResponseEntity.ok(createdProduct);
-    }
-
-    @GetMapping ("/product/desc/{description}")
-    public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
-        List<Product> matchedProducts = productService.getProductByDescription(description);
-        return ResponseEntity.ok(matchedProducts);
     }
 
     @GetMapping ("/product/projection/{name}")

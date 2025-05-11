@@ -11,12 +11,23 @@ import java.time.LocalDateTime;
 @MappedSuperclass // tells spring that we dont need a table for this class, but we need these columns to be inherited in child class.
 public class BaseModel {
 
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private int id;
     private String name;
+    private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
     private String updatedBy;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -24,6 +35,14 @@ public class BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getCreatedAt() {

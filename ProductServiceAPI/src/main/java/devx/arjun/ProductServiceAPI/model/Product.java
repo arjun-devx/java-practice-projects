@@ -11,22 +11,9 @@ import java.time.LocalDateTime;
 @Entity
 public class Product extends BaseModel {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private int id;
-    private String description;
     private double price;
     private double rating;
     private int quantity;
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public double getPrice() {
         return price;

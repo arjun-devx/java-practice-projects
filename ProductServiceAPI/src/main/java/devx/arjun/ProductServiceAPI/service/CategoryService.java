@@ -5,6 +5,7 @@ import devx.arjun.ProductServiceAPI.dto.CategoryResponseDTO;
 import devx.arjun.ProductServiceAPI.exception.CategoryNotFoundException;
 import devx.arjun.ProductServiceAPI.exception.DuplicateCategoryNameException;
 import devx.arjun.ProductServiceAPI.model.Category;
+import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.repository.CategoryRepository;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,11 @@ public class CategoryService {
 
     public List<Category> getAllCategory () {
         return categoryRepository.findAll();
+    }
+
+    public List<Product> getAllProductsByCategory(int categoryId) {
+        Category savedCategory = getCategory(categoryId);
+        List<Product> products = savedCategory.getProducts();
+        return products;
     }
 }

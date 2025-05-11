@@ -1,9 +1,12 @@
 package devx.arjun.ProductServiceAPI.service;
 import devx.arjun.ProductServiceAPI.client.FakeStoreClient;
+import devx.arjun.ProductServiceAPI.dto.CategoryRequestDTO;
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import devx.arjun.ProductServiceAPI.dto.ProductProjection;
 import devx.arjun.ProductServiceAPI.exception.ProductNotFoundException;
+import devx.arjun.ProductServiceAPI.model.Category;
 import devx.arjun.ProductServiceAPI.model.Product;
+import devx.arjun.ProductServiceAPI.repository.CategoryRepository;
 import devx.arjun.ProductServiceAPI.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +17,17 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-
     @Autowired
     private FakeStoreClient fakeStoreClient;
-
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryService categoryService;
+
+    public List<Product> getAllProductByCategoryId(int categoryId) {
+        List<Product> products = categoryService.getAllProductsByCategory(categoryId);
+        return products;
+    }
 
     public List<Product> getAllProductRepo() {
         return productRepository.findAll();
