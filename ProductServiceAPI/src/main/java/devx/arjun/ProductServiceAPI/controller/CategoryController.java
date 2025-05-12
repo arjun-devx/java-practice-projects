@@ -2,7 +2,9 @@ package devx.arjun.ProductServiceAPI.controller;
 
 import devx.arjun.ProductServiceAPI.dto.CategoryRequestDTO;
 import devx.arjun.ProductServiceAPI.dto.CategoryResponseDTO;
+import devx.arjun.ProductServiceAPI.dto.ProductResponseDTO;
 import devx.arjun.ProductServiceAPI.model.Category;
+import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +47,27 @@ public class CategoryController {
             categoryResponseDTO.add(responseDTO);
         }
         return ResponseEntity.ok(categoryResponseDTO);
+    }
+
+    @DeleteMapping ("/category/{id}")
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable ("id") int id) {
+        return ResponseEntity.ok(categoryService.deleteCategory(id));
+    }
+
+    @GetMapping ("/product/category/{categoryId}")
+    public ResponseEntity<List<ProductResponseDTO>> getAllProductsByCategory(@PathVariable ("categoryId") int categoryId) {
+
+        List<Product> savedProducts = categoryService.getAllProductsByCategory(categoryId);
+
+        List<ProductResponseDTO> responseListDTO = new ArrayList<>();
+        for (Product product : savedProducts) {
+            ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+            productResponseDTO.setProductName(product.getName());
+            productResponseDTO.setProductDescription(product.getDescription());
+            productResponseDTO.setProductPrice(product.getPrice());
+            productResponseDTO.setRating(product.getRating());
+            responseListDTO.add(productResponseDTO);
+        }
+        return ResponseEntity.ok(responseListDTO);
     }
 }

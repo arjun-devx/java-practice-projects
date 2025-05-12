@@ -3,6 +3,8 @@ import devx.arjun.ProductServiceAPI.client.FakeStoreClient;
 import devx.arjun.ProductServiceAPI.dto.CategoryRequestDTO;
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import devx.arjun.ProductServiceAPI.dto.ProductProjection;
+import devx.arjun.ProductServiceAPI.dto.ProductRequestDTO;
+import devx.arjun.ProductServiceAPI.exception.CategoryNotFoundException;
 import devx.arjun.ProductServiceAPI.exception.ProductNotFoundException;
 import devx.arjun.ProductServiceAPI.model.Category;
 import devx.arjun.ProductServiceAPI.model.Product;
@@ -22,12 +24,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
-    public List<Product> getAllProductByCategoryId(int categoryId) {
-        List<Product> products = categoryService.getAllProductsByCategory(categoryId);
-        return products;
-    }
 
     public List<Product> getAllProductRepo() {
         return productRepository.findAll();
@@ -42,8 +40,25 @@ public class ProductService {
         }
     }
 
-    public Product saveProductRepo(Product newProduct) {
-        Product savedProduct = productRepository.save(newProduct);
+    public Product saveProductRepo(ProductRequestDTO productRequestDTO) {
+
+        //check if the category exists before adding the product to it or not?
+        Category savedCategory = categoryRepository.findById(productRequestDTO.getCategoryId()).orElseThrow(
+                () -> new CategoryNotFoundException("Category does not exists")
+        );
+
+        Product product = new Product();
+        product.setName(productRequestDTO.getName());
+        product.setDescription(productRequestDTO.getDescription());
+        product.setPrice(productRequestDTO.getPrice());
+        product.setQuantity(productRequestDTO.getQuantity());
+        product.setRating(productRequestDTO.getRating());
+
+        Product savedProduct = productRepository.save(product);
+
+        savedCategory.getProducts().add(savedProduct);
+        categoryRepository.save(savedCategory);
+
         return savedProduct;
     }
 

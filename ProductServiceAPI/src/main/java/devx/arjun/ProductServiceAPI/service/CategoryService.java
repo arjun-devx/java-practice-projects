@@ -20,6 +20,8 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductService productService;
 
     public Category createCategory(CategoryRequestDTO categoryRequestDTO) {
 
@@ -27,7 +29,6 @@ public class CategoryService {
         if (categoryOptional.isPresent()) {
             throw new DuplicateCategoryNameException("Duplicate Category name, category already exists" + categoryRequestDTO.getCategoryName());
         }
-
         //lambda expression - alternate code for above
         /*
         Category savedCategory = categoryRepository.findByName(categoryRequestDTO.getCategoryName()).orElseThrow(
@@ -55,5 +56,14 @@ public class CategoryService {
         Category savedCategory = getCategory(categoryId);
         List<Product> products = savedCategory.getProducts();
         return products;
+    }
+
+    public boolean deleteCategory(int categoryId) {
+        Category category = getCategory(categoryId);
+        for (Product product : category.getProducts()) {
+            productService.deleteProduct(product.getId());
+        }
+        categoryRepository.deleteById(categoryId);
+        return true;
     }
 }

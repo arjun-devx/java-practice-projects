@@ -65,4 +65,29 @@ ProductInfoDTO[]2
 
 -------------------
 
+------- Requirements for product service ------
+1. CRUD operations on Product
+2. CRUD operations on Category
+3. Get all products from Category API
+4. Get Category from Product API -- HOMEWORK
+5. Add Category to Product ==> updateProductApi()
+6. Remove category from Product
+7. Add product to category
+8. Remove product from category
+
+5-7 and 6-8 are essentially same at DB level, but can be perceived differently
+at an API level.
+
+
+
+Entity
+
+Product -> does not contain Category
+Category -> contains List<Product>
+
+First save the product, then add product to category, then save category
+
+DB
+Product table -> categoryID foreign key
+Category table -> does not contain any info
 

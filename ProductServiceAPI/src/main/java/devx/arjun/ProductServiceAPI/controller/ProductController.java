@@ -2,6 +2,7 @@ package devx.arjun.ProductServiceAPI.controller;
 
 import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
 import devx.arjun.ProductServiceAPI.dto.ProductProjection;
+import devx.arjun.ProductServiceAPI.dto.ProductRequestDTO;
 import devx.arjun.ProductServiceAPI.dto.ProductResponseDTO;
 import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.service.ProductService;
@@ -26,24 +27,6 @@ public class ProductController {
 
     //below section is for the controller --> services --> repository --> DataBase (products model) - mariaDB
 
-    @GetMapping ("/product/category/{categoryId}")
-    public ResponseEntity<List<ProductResponseDTO>> getAllProductsByCategory(@PathVariable ("categoryId") int categoryId) {
-
-        List<Product> savedProducts = productService.getAllProductByCategoryId(categoryId);
-
-        List<ProductResponseDTO> responseListDTO = new ArrayList<>();
-        for (Product product : savedProducts) {
-            ProductResponseDTO productResponseDTO = new ProductResponseDTO();
-                productResponseDTO.setProductName(product.getName());
-                productResponseDTO.setProductDescription(product.getDescription());
-                productResponseDTO.setProductPrice(product.getPrice());
-                productResponseDTO.setRating(product.getRating());
-            responseListDTO.add(productResponseDTO);
-        }
-        return ResponseEntity.ok(responseListDTO);
-    }
-
-
     @GetMapping ("/product/desc/{description}")
     public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
         List<Product> matchedProducts = productService.getProductByDescription(description);
@@ -64,8 +47,8 @@ public class ProductController {
     }
 
     @PostMapping ("/product")
-    public ResponseEntity<Product> createProductRepo(@RequestBody Product product) {
-        Product createdProduct = productService.saveProductRepo(product);
+    public ResponseEntity<Product> createProductRepo(@RequestBody ProductRequestDTO productRequestDTO) {
+        Product createdProduct = productService.saveProductRepo(productRequestDTO);
         return ResponseEntity.ok(createdProduct);
     }
 
