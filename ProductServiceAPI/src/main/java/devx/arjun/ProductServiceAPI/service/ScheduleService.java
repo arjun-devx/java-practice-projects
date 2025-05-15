@@ -13,4 +13,15 @@ public class ScheduleService {
     public void displayHelloWorld() {
         System.out.println("Hello World :" + LocalDateTime.now());
     }
+
+    @Scheduled (cron = "0 * * * * *") //display for every second, min, hour, day, week, month
+    public void displayCRON() {
+        System.out.println("Display CRON : " + LocalDateTime.now());
+    }
+
+    @Scheduled (cron = "0 51 11 * * *") // 9:51 PM every day
+    public void displayCROS2() {
+        System.out.println("Display CRON2 : " + LocalDateTime.now());
+    }
+
 }
