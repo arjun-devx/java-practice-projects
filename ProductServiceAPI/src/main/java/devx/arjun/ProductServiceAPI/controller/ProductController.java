@@ -46,9 +46,11 @@ public class ProductController {
         return ResponseEntity.ok(getAllProducts);
     }
 
-    @GetMapping("/all/product/{pageNumber}")
-    public ResponseEntity<Page<Product>> getAllProductsPaginated(@PathVariable ("pageNumber") int pageNumber) {
-        Page<Product> getAllProducts = productService.getAllProductsPaginated(pageNumber);
+    @GetMapping("/all/product/{pageNumber}/{ascFilter}/{descFilter}")
+    public ResponseEntity<Page<Product>> getAllProductsPaginated(@PathVariable ("pageNumber") int pageNumber,
+                                                                 @PathVariable ("ascFilter") String ascFilter,
+                                                                 @PathVariable ("descFilter") String descFilter) {
+        Page<Product> getAllProducts = productService.getAllProductsPaginated(pageNumber, ascFilter, descFilter);
         return ResponseEntity.ok(getAllProducts);
     }
 
@@ -75,7 +77,6 @@ public class ProductController {
         Boolean deleteProduct = productService.deleteProductRepo(productId);
         return ResponseEntity.ok(deleteProduct);
     }
-
 //This below section is for fakestoreapi and controller --> services --> Client making http call to the fakestoreapi
 
     @GetMapping ("/product/fake")

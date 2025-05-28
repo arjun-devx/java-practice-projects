@@ -1,9 +1,6 @@
 package devx.arjun.ProductServiceAPI.service;
 import devx.arjun.ProductServiceAPI.client.FakeStoreClient;
-import devx.arjun.ProductServiceAPI.dto.CategoryRequestDTO;
-import devx.arjun.ProductServiceAPI.dto.FakeStoreProductDTO;
-import devx.arjun.ProductServiceAPI.dto.ProductProjection;
-import devx.arjun.ProductServiceAPI.dto.ProductRequestDTO;
+import devx.arjun.ProductServiceAPI.dto.*;
 import devx.arjun.ProductServiceAPI.exception.CategoryNotFoundException;
 import devx.arjun.ProductServiceAPI.exception.ProductNotFoundException;
 import devx.arjun.ProductServiceAPI.model.Category;
@@ -34,7 +31,12 @@ public class ProductService {
     public List<Product> getAllProductsList() {
         return productRepository.findAll();
     }
-    public Page<Product> getAllProductsPaginated(int pageNumber) {
+    public Page<Product> getAllProductsPaginated(int pageNumber, String filterAsc, String filterDesc) {
+        //Sort sort = Sort.by(parameter).ascending().and(Sort..).and(Sort...)
+        Sort sort = Sort.by(filterAsc).ascending().and(Sort.by(filterDesc).descending());
+        return productRepository.findAll(PageRequest.of(pageNumber, 3, sort));
+    }
+    public Page<Product> getAllProductsPaginated(int pageNumber, List<SortDTO> sorting) {
         //Sort sort = Sort.by(parameter).ascending().and(Sort..).and(Sort...)
         Sort sort = Sort.by("price").ascending().and(Sort.by("rating").descending());
         return productRepository.findAll(PageRequest.of(pageNumber, 3, sort));
