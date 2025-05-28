@@ -7,6 +7,7 @@ import devx.arjun.ProductServiceAPI.dto.ProductResponseDTO;
 import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +34,22 @@ public class ProductController {
         return ResponseEntity.ok(matchedProducts);
     }
 
-
     @GetMapping("/product/{productId}")
     public ResponseEntity<Product> getProductByIdRepo (@PathVariable int productId) {
         Product getProductById = productService.getProductRepo(productId);
         return ResponseEntity.ok(getProductById);
     }
 
+    /*
     @GetMapping("/product")
-    public ResponseEntity<List<Product>> getAllProductsRepo () {
+    public ResponseEntity<List<Product>> getAllProductsRepo() {
         List<Product> getAllProducts = productService.getAllProductRepo();
+        return ResponseEntity.ok(getAllProducts);
+    } */
+
+    @GetMapping("/all/product/{pageNumber}")
+    public ResponseEntity<Page<Product>> getAllProductsRepo(@PathVariable ("pageNumber") int pageNumber) {
+        Page<Product> getAllProducts = productService.getAllProductRepo(pageNumber);
         return ResponseEntity.ok(getAllProducts);
     }
 
@@ -70,10 +77,7 @@ public class ProductController {
         return ResponseEntity.ok(deleteProduct);
     }
 
-
-
     //This below section is for fakestoreapi and controller --> services --> Client making http call to the fakestoreapi
-
     @GetMapping ("/product/fake")
     public FakeStoreProductDTO[] getAllProducts() {
 

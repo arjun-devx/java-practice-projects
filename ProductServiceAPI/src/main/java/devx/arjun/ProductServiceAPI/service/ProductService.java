@@ -11,6 +11,9 @@ import devx.arjun.ProductServiceAPI.model.Product;
 import devx.arjun.ProductServiceAPI.repository.CategoryRepository;
 import devx.arjun.ProductServiceAPI.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,9 +29,12 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
-    public List<Product> getAllProductRepo() {
-        return productRepository.findAll();
+        //public List<Product> getAllProductRepo(int pageNumber, int pageSize) {
+        //I was returning the list of products but when I implemented pagination, findAll method from repository is returning page<product>
+    public Page<Product> getAllProductRepo(int pageNumber) {
+        //Sort sort = Sort.by(parameter).ascending().and(Sort..).and(Sort...)
+        Sort sort = Sort.by("price").ascending().and(Sort.by("rating").descending());
+        return productRepository.findAll(PageRequest.of(pageNumber, 3, sort));
     }
 
     public Product getProductRepo(int productId) {
