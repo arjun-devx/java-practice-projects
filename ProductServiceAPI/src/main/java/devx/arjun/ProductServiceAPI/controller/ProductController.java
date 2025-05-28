@@ -26,7 +26,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    //below section is for the controller --> services --> repository --> DataBase (products model) - mariaDB
+//below section is for the controller --> services --> repository --> DataBase (products model) - mariaDB
 
     @GetMapping ("/product/desc/{description}")
     public ResponseEntity<List<Product>> getProductByDescription(@PathVariable ("description") String description) {
@@ -40,16 +40,15 @@ public class ProductController {
         return ResponseEntity.ok(getProductById);
     }
 
-    /*
     @GetMapping("/product")
-    public ResponseEntity<List<Product>> getAllProductsRepo() {
-        List<Product> getAllProducts = productService.getAllProductRepo();
+    public ResponseEntity<List<Product>> getAllProductsList() {
+        List<Product> getAllProducts = productService.getAllProductsList();
         return ResponseEntity.ok(getAllProducts);
-    } */
+    }
 
     @GetMapping("/all/product/{pageNumber}")
-    public ResponseEntity<Page<Product>> getAllProductsRepo(@PathVariable ("pageNumber") int pageNumber) {
-        Page<Product> getAllProducts = productService.getAllProductRepo(pageNumber);
+    public ResponseEntity<Page<Product>> getAllProductsPaginated(@PathVariable ("pageNumber") int pageNumber) {
+        Page<Product> getAllProducts = productService.getAllProductsPaginated(pageNumber);
         return ResponseEntity.ok(getAllProducts);
     }
 
@@ -77,7 +76,8 @@ public class ProductController {
         return ResponseEntity.ok(deleteProduct);
     }
 
-    //This below section is for fakestoreapi and controller --> services --> Client making http call to the fakestoreapi
+//This below section is for fakestoreapi and controller --> services --> Client making http call to the fakestoreapi
+
     @GetMapping ("/product/fake")
     public FakeStoreProductDTO[] getAllProducts() {
 

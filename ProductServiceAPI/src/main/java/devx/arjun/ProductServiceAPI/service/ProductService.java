@@ -31,7 +31,10 @@ public class ProductService {
 
         //public List<Product> getAllProductRepo(int pageNumber, int pageSize) {
         //I was returning the list of products but when I implemented pagination, findAll method from repository is returning page<product>
-    public Page<Product> getAllProductRepo(int pageNumber) {
+    public List<Product> getAllProductsList() {
+        return productRepository.findAll();
+    }
+    public Page<Product> getAllProductsPaginated(int pageNumber) {
         //Sort sort = Sort.by(parameter).ascending().and(Sort..).and(Sort...)
         Sort sort = Sort.by("price").ascending().and(Sort.by("rating").descending());
         return productRepository.findAll(PageRequest.of(pageNumber, 3, sort));
