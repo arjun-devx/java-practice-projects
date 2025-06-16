@@ -26,6 +26,19 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    public boolean createNProduct(int n) {
+        for (int i = 0; i < n; i++) {
+            Product product = new Product();
+            product.setName("Product " + i);
+            product.setDescription("Product Description " + i);
+            product.setPrice(100 * i * i);
+            product.setQuantity(i);
+            product.setRating(i * 0.05);
+            productRepository.save(product);
+        }
+        return true;
+    }
+
         //public List<Product> getAllProductRepo(int pageNumber, int pageSize) {
         //I was returning the list of products but when I implemented pagination, findAll method from repository is returning page<product>
     public List<Product> getAllProductsList() {

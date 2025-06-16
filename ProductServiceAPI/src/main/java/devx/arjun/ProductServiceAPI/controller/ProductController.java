@@ -26,6 +26,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+//below API is for testing the REDIS - caching test
+    @PostMapping ("/product/create/{number}")
+    public ResponseEntity<Boolean> createProduct(@PathVariable("number") Integer number) {
+        return ResponseEntity.ok(productService.createNProduct(number));
+    }
+
 //below section is for the controller --> services --> repository --> DataBase (products model) - mariaDB
 
     @GetMapping ("/product/desc/{description}")
@@ -77,6 +83,7 @@ public class ProductController {
         Boolean deleteProduct = productService.deleteProductRepo(productId);
         return ResponseEntity.ok(deleteProduct);
     }
+
 //This below section is for fakestoreapi and controller --> services --> Client making http call to the fakestoreapi
 
     @GetMapping ("/product/fake")
